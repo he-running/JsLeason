@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>js数组</title>
+</head>
+<body>
+
+    <div>
+        <h3>js数组</h3>
+    </div>
+
+<script>
+    //1.push和pop,在尾部添加或删除一个元素
+    var arr = [1, 2];
+    arr.push('A', 'B'); // 返回Array新的长度: 4
+    arr.pop(); // pop()返回'B'
+    arr; // [1, 2, 'A']
+    arr.pop(); arr.pop(); arr.pop(); // 连续pop 3次
+    arr; // []
+    arr.pop(); // 空数组继续pop不会报错，而是返回undefined
+    arr; // []
+
+    //2.unshift,shift，在头部添加或删除指定元素
+    var arr2 = [1, 2];
+    console.log(arr2);
+    arr2.unshift('A', 'B'); // 在数组头部添加元素
+    console.log(arr2);
+    arr2.unshift('C','D');
+    console.log(arr2)
+    arr2.shift(); // 删除第一个元素
+    arr2.shift();
+    console.log(arr2);
+
+    //3.sort,reverse
+    var arr3=['a','d','b','c'];
+    console.log(arr3.sort());
+    console.log(arr3.reverse());
+
+    //4.slice
+    //slice截取数组，返回一个新的数组，但不改变原数组
+    var arr4=['ad','fd','df',12,45];
+    //从某点开始截取到结束
+    console.log(arr4.slice(3));
+    //指定截取范围
+    console.log(arr4.slice(2,2));
+
+    //5.splice它可以从指定的索引开始删除若干元素，然后再从该位置添加若干元素,返回一个新数组
+    console.log()
+    var arr5=[1,2,3,4,5,6];
+    console.log(arr5.splice(2,2,'a','b'));//删除后添加新元素
+    console.log(arr5.splice(2,2));//只删除不添加
+    console.log(arr5.splice(2,0,'c','d'));//只添加不删除
+
+    //6.concat,拼接两个数组，返回一个新数组
+    var arr6 = [1,2,3,5,67,7];
+    var add = arr6.concat(['a','b','c']);
+    console.log(add);
+    //或者拼接元素和数组
+    console.log(arr6.concat(8,9,[10,11]));//会自动把数组拆开拼接在一起
+
+    //7.join,自动把数组用指定的连接符连接在一起并返回字符串
+    var arr7 = [1,4,6,'b','d'];
+    console.log(arr7.join('-'));
+
+    //8.多维数组,数组里面包含数组，便是多为数组
+    var arr8 = [[1,2],[5,6,8],'a'];
+    console.log(arr8[1][2]);//输出8
+
+</script>
+</body>
+</html>

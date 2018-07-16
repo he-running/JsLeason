@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>file操作</title>
+</head>
+<body>
+    <div>
+        <!--预览-->
+        <div style="text-align: center;background-color: #cccccc">
+            <img id="img-preview" src="" alt="" style="width: 200px;height: 200px;">
+        </div>
+        <!--选择文件-->
+        <div>
+            <input id="img-file" type="file">
+        </div>
+        <!--信息-->
+        <div>
+            <p id="img-info"></p>
+        </div>
+    </div>
+</body>
+<script>
+    var imgFile = document.getElementById('img-file');
+    var preview = document.getElementById('img-preview');
+    var imgInfo = document.getElementById('img-info');
+
+    //添加监听事件
+    imgFile.addEventListener('change', function () {
+        //清除预览
+        preview.style.backgroundImage = '';
+        //空检查
+        if (!imgFile.value) {
+            imgInfo.innerText = '未选择图片';
+            return;
+        }
+        //获取file
+        var inputFile = imgFile.files[0];
+        if (inputFile.type !== 'image/jpeg'&&inputFile.type!=='image/png'
+            &&inputFile.type!=='image/gif') {
+            alert('不是有效的图片格式');
+            return;
+        }
+        //获取info
+        imgInfo.innerText = '文件: '+inputFile.name+'\n'+
+                            '大小: '+inputFile.size+'\n'+
+                            '时间：'+inputFile.lastModifiedDate;
+        //读取file
+        var reader = new FileReader();
+        reader.onload = function (event) {
+            var data = event.target.result;
+            preview.style.backgroundImage = 'url(' + data + ')';
+        };
+        //以dataUrl的形式读取文件
+        reader.readAsDataURL(inputFile);
+    });
+
+</script>
+</html>

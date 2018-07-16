@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>高阶函数</title>
+</head>
+<body>
+    <div>高阶函数</div>
+</body>
+<script>
+    //高阶函数:函数接收另一个函数作为自己的参数，该函数便称为高阶函数
+    function add(x,y,f) {
+        return f(x)+f(y);
+    }
+
+    console.log(add(-5,6,Math.abs));
+
+    //1.map函数,内置的高阶函数
+    //通常用于变换类型
+    function pow(x) {
+        return x*x;
+    }
+
+    var arr = [1,2,3,4,5,6,7,8,9];
+    var result = arr.map(pow);//传入pow函数对象作为参数,不带‘()’
+    console.log(result);
+    console.log(arr.map(String));
+
+    //2.reduce函数，接收2个参数，把结果和array的下一元素进行继续运算
+    //通常用来求和，求积等运算
+    function product(arr) {
+
+       return arr.reduce(function(x,y){
+            return x*y;
+        });
+    }
+
+    // 测试:
+    if (product([1, 2, 3, 4]) === 24 && product([0, 1, 2]) === 0 && product([99, 88, 77, 66]) === 44274384) {
+        console.log('测试通过!');
+    } else {
+        console.log('测试失败!');
+    }
+
+    //3.测试例子
+    var s = '13579';
+    var a = s.split('');
+    console.log('拆分字符串：'+a);
+
+    //4.filter()把传入的函数依次作用于每个元素，
+    // 然后根据返回值是true还是false决定保留还是丢弃该元素。
+    //true保留，false丢弃
+    /*
+    * 去除重复元素依靠的是indexOf总是返回第一个元素的位置，
+    * 后续的重复元素位置与indexOf返回的位置不相等，因此被filter滤掉了。
+    * */
+    var r,
+        arr = ['apple', 'strawberry', 'banana', 'pear', 'apple',
+            'orange', 'orange', 'strawberry'];
+    r = arr.filter(function (ele, index, self) {
+       console.log('遍历第'+index+'个元素：'+ele);
+       return self.indexOf(ele) === index;
+    });
+    console.log('去重后：'+r);
+
+    //5.sort排序，根据返回的值，按默认的由小到大排序
+    //通常规定，对于两个元素x和y，如果认为x < y，则返回-1，
+    // 如果认为x == y，则返回0，如果认为x > y，则返回1
+    var arr = [10, 20, 1, 2];
+    //降序
+    arr.sort(function (x, y) {
+        if (x < y) {
+            return 1;
+        }
+        if (x > y) {
+            return -1;
+        }
+        return 0;
+    }); // [20, 10, 2, 1]
+    console.log(arr);
+    //升序
+
+</script>
+</html>

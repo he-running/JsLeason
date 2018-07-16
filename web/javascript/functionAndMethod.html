@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>函数与方法</title>
+</head>
+<body>
+    <div>函数与方法</div>
+</body>
+<script>
+
+    //1.函数的内部方法，apply，call等的使用
+    /*
+     * A.每个函数，都有内部方法apply，使用方式如：func.apply(对象，paramArray);
+     * 传入两个参数，对象：对普通函数而言，对象就是null，对于对象方法而言，就是定义该函数的对象本身；
+     * paramArray:该函数的参数打包成数组
+     *
+     * B.对call方法，唯一区别在于第二个参数传入的参数按原来的顺序传入
+     * */
+    function getAge() {
+        var y = new Date().getFullYear();
+        return y - this.birth;
+    }
+
+    var xiaoming = {
+        name: '小明',
+        birth: 1990,
+        age: getAge
+    };
+
+    xiaoming.age(); // 25
+    console.log(getAge.apply(xiaoming, [])); // 25, this指向xiaoming, 参数为空
+
+    //对普通函数，对象为null，如Math.max()方法
+    console.log(Math.max.apply(null, [3, 4, 5]));
+    console.log(Math.max.call(null, 3, 4, 5));
+
+    //2.利用apply方法，动态改变一些内置函数,重新定义函数
+    var oldParseInt = parseInt;
+    var count = 0;
+
+    window.parseInt = function () {
+        count = count + 1;
+        console.log('传入参数个数：' + arguments.length);
+        return oldParseInt.apply(null,arguments);
+    }
+
+    parseInt('10');
+    parseInt('20');
+    parseInt('30','80');
+
+    console.log(count);
+
+</script>
+</html>

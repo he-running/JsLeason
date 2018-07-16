@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>画布</title>
+</head>
+<body>
+    <div>画布</div>
+
+    <div>
+        <!--使用css设定宽高会不成比例,所以在canvas中直接指定-->
+        <!--<canvas id="test-canvas" style="width: 200px;height: 200px;">-->
+        <canvas id="test-canvas" width="300px" height="200px">
+            <p>你的浏览器不支持canvas！</p><!--支持画布时，内部定义的内容将不显示-->
+        </canvas>
+    </div>
+
+</body>
+<script>
+    var canvas = document.getElementById('test-canvas');
+    if (canvas.getContext) {
+        alert('支持画布');
+    }else {
+        alert('不支持画布');
+    }
+
+    var ctx2d = canvas.getContext('2d');
+
+    var b = false;
+    setInterval(function () {
+        console.log('b = ' +b);
+
+        if (b) {
+            ctx2d.clearRect(0,0,200,200);//擦除(0,0)位置大小为200x200的矩形，擦除的意思是把该区域变为透明
+            ctx2d.fillStyle = '#dddddd';//设置颜色
+            ctx2d.fillRect(10,10,130,130);//把(10,10)位置大小为130x130的矩形涂色
+            // 利用Path绘制复杂路径:
+            var path = new Path2D();
+            path.arc(75,75,50,0,Math.PI*2,true);//外层大圆
+            path.moveTo(110,75);
+            path.arc(75,75,35,0,Math.PI,false);//嘴巴
+            path.moveTo(65,65);
+            path.arc(60,65,5,0,Math.PI*2,true);//左眼
+            path.moveTo(95,65);
+            path.arc(90,65,5,0,Math.PI*2,true);//右眼
+            ctx2d.strokeStyle = '#0000ff';
+            ctx2d.stroke(path);
+        }else {
+            ctx2d.clearRect(0,0,canvas.width,canvas.height);
+            //阴影
+            ctx2d.shadowOffsetX = 2;
+            ctx2d.shadowOffsetY = 2;
+            ctx2d.shadowBlur = 2;
+            ctx2d.shadowColor = '#666666';
+            //文字
+            ctx2d.font = '24px Arial';
+            ctx2d.fillStyle = '#333333';
+            ctx2d.fillText('hello,js',20,40);
+        }
+        b = !b;
+    },5000);
+
+</script>
+</html>

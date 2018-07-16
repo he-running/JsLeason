@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>正则表达式</title>
+</head>
+<body>
+    <div>
+        正则表达式
+    </div>
+</body>
+<script>
+    //1.regex的声明,和切分字符串
+    var s1 = 'a b   c';
+    var s2 = 'a,b, c  d';
+    var reg1 = /\s+/;
+    var reg12 = /[\s\,]+/;
+//    var reg13 = new RegExp('正则表达式');
+    console.log(s1.split(reg1));
+    console.log(s2.split(reg12));
+//    console.log('a,b, c  d'.split(/[\s\,]+/));
+
+
+    //2.用‘()’匹配进行分组
+    var reg2 = /^(\d{3,4})-(\d{3,8})$/;
+
+    console.log(reg2.exec('020-12345678'));
+    console.log(reg2.exec('010-12345678'));
+    console.log(reg2.exec('0759 5273455'));
+
+    //3.test，返回Boolean
+    //验证Email地址的正则表达式
+    var re = /^[\w\.]+\@[\w]+\.[a-z]{3}$/;
+    var
+        i,
+        success = true,
+        should_pass = ['someone@gmail.com', 'bill.gates@microsoft.com', 'tom@voyager.org', 'bob2015@163.com'],
+        should_fail = ['test#gmail.com', 'bill@microsoft', 'bill%gates@ms.com', '@voyager.org'];
+    for (i = 0; i < should_pass.length; i++) {
+        if (!re.test(should_pass[i])) {
+            console.log('测试失败: ' + should_pass[i]);
+            success = false;
+            break;
+        }
+    }
+    for (i = 0; i < should_fail.length; i++) {
+        if (re.test(should_fail[i])) {
+            console.log('测试失败: ' + should_fail[i]);
+            success = false;
+            break;
+        }
+    }
+    if (success) {
+        console.log('测试通过!');
+    }
+
+</script>
+</html>

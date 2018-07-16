@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>浏览器</title>
+</head>
+<body>
+    <div>
+        浏览器
+    </div>
+    <div>
+        <span>location对象</span>
+        <button onclick="reloadCurrent()">重新加载</button>
+        <button onclick="newOpen()">打开新页面</button>
+    </div>
+
+    <div>
+        <span>document对象</span>
+        <dl id="drink-menu" style="border:solid 1px #ccc;padding:6px;">
+            <dt>摩卡</dt>
+            <dd>热摩卡咖啡</dd>
+            <dt>酸奶</dt>
+            <dd>北京老酸奶</dd>
+            <dt>果汁</dt>
+            <dd>鲜榨苹果汁</dd>
+        </dl>
+    </div>
+</body>
+<script>
+    /*
+    * 浏览器对象
+    */
+    //1.window
+    console.log('width: '+window.innerWidth+'\n'+'height: '+window.innerHeight);
+    console.log('out-width: '+window.outerWidth+'\n'+'out-height: '+window.outerHeight);
+
+    //2.navigator
+    console.log('navigator-appName: '+navigator.appName);
+    console.log('navigator-appVersion: '+navigator.appVersion);
+    console.log('navigator-language: '+navigator.language);
+    console.log('navigator-userAgent: '+navigator.userAgent);
+    console.log('navigator-cookieEnabled: '+navigator.cookieEnabled);
+    console.log('navigator-platform: '+navigator.platform);
+
+    console.log('width-:'+window.innerWidth);
+    console.log('width-:'+document.body.clientWidth);
+    console.log('width-:'+window.innerWidth||document.body.clientWidth);
+
+    //3.screen
+    console.log('screen:'+screen.height+'-'+screen.width+'-'+screen.colorDepth);
+
+    //4.location 表示当前页面的URL信息
+    console.log('location-'+location.href);
+    console.log('location-'+location.protocol);
+    console.log('location-'+location.host);
+    console.log('location-'+location.port);
+    console.log('location-'+location.pathname);
+    console.log('location-'+location.search);
+    console.log('location-'+location.hash);
+    //重新加载
+    function reloadCurrent() {
+        location.reload();//重新加载当前
+    }
+    //打开新页面
+    function newOpen() {
+        location.assign('/');
+    }
+
+    //5.document,html在浏览器中以树形结构存在，document就是html的根节点
+    var menu,s,dt;
+    menu = document.getElementById('drink-menu');
+    console.log('tagName-'+menu.tagName);
+    s = '饮料有：';
+    dt = document.getElementsByTagName('dt');
+    for (var i = 0; i<dt.length; i++) {
+        s = s + dt[i].innerHTML+',';
+    }
+    s =s.slice(0,s.length-1);
+    console.log(s);
+    //当服务器或浏览器设置cookie为httpOnly时，js代码是读取不到cookie信息的
+    console.log('cookie-'+document.cookie);
+
+    //6.history,可用来前进或后退一个页面，但不鼓励使用这样的方式操作浏览器
+
+
+
+</script>
+</html>
