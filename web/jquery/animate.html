@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>动画</title>
+    <script src="../frame/jquery-3.3.1.js"></script>
+</head>
+<body>
+    <div>动画,动态改变DOM对象的状态</div>
+    <div id="test-animates" style="width: 50px;height: 50px;background-color: aquamarine">
+       <p>animate</p>
+    </div>
+
+</body>
+<script>
+    /*
+    * jQuery封装了很多简单的动画，只需要一行代码即可调用，比用js写动画简单了很多
+    * */
+
+    /*
+    * 1.show(),hide()
+    * --显示，隐藏
+    * 传入时间参数即延时执行
+    * 传入‘slow’，‘fast’等按预设的执行
+    * 传入时间+回调函数，则延时后执行函数
+    * */
+
+
+    /*
+    * 2.slideIn(),slideOut()
+    * --滑入，滑出
+    * 参数同上
+    * */
+
+    /*
+    * 3.fadeIn(),fadeOut()
+    * --淡入淡出
+    * 参数同上
+    * */
+
+    /*
+    * 4.自定义xxx.animate({animateObject},delay,function)
+    * 可传入3个参数，第一个是动画对象，第二个延时，第三个回调函数
+    * 第3个参数可选
+    * */
+
+    /*
+    * 5.串行动画
+    * 以上1-4的动画是可以串行使用链式调用的
+    * */
+    var div = $('#test-animates');
+    // 动画效果：slideDown - 暂停 - 放大 - 暂停 - 缩小
+    div.slideDown(2000)
+        .delay(1000)
+        .animate({
+            width: '256px',
+            height: '256px'
+        }, 2000)
+        .delay(1000)
+        .animate({
+            width: '128px',
+            height: '128px'
+        }, 2000);
+    div.slideDown(1000)
+        .delay(1000)
+        .animate({
+            opacity: 0.5,
+            width: '60px',
+            height: '60px'
+        },2000)
+        .delay(1000)
+        .animate({
+            opacity: 1,
+            width: '80px',
+            height: '80px'
+        },2000)
+</script>
+</html>

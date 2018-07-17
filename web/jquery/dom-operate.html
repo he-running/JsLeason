@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>修改DOM结构</title>
+    <script src="../frame/jquery-3.3.1.js"></script>
+</head>
+<body>
+    <div>修改DOM结构</div>
+
+    <div id="test-div">
+        <ul>
+            <li><span>JavaScript</span></li>
+            <li><span>Python</span></li>
+            <li><span>Swift</span></li>
+        </ul>
+    </div>
+
+</body>
+<script>
+    /*1.parent.append()把DOM添加到最后，parent.prepend()则把DOM添加到最前，
+        定位到父节点，跟js的appendChild和insertBefore类似*/
+    $('#test-div>ul').append('<li><span>java</span></li>')
+        .prepend('<li><span>kotlin</span></li>');
+
+    // 创建DOM对象:
+   /* var ps = document.createElement('li');
+    ps.innerHTML = '<span>Pascal</span>';*/
+    // 添加DOM对象:
+    /*ul.append(ps);*/
+
+    // 添加jQuery对象:
+   /* ul.append($('#scheme'));*/
+    // 添加函数对象:
+  /*  ul.append(function (index, html) {
+        return '<li><span>Language - ' + index + '</span></li>';
+    });*/
+
+
+
+    /*2.同级节点可以用after()或者before()方法。注意选择器需要定位到
+        同级节点，不可是父类节点后用：xxx选择，这跟js的DOM插入appendChild不一样*/
+    setTimeout(function () {
+//        var js = $('#test-div>ul:first-child');//这种只是定位到ul集合，然后选取集合的第一个对象
+        var js = $('#test-div>ul>li:first-child');
+        js.after('<li><span>Lua</span></li>').before('<li><span>C++</span></li>');
+    },2000);
+
+    /*3.要删除DOM节点，拿到jQuery对象后直接调用remove()方法就可以了,定位方式跟第2点一致*/
+    setTimeout(function () {
+        $('#test-div>ul>li:last-child').remove();
+    },4000);
+
+</script>
+</html>

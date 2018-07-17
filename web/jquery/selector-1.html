@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>层级选择器</title>
+    <script src="../frame/jquery-3.3.1.js"></script>
+</head>
+<body>
+    <div>层级选择器</div>
+
+    <div>
+        <p>
+           如果两个DOM元素具有层级关系，就可以用$('ancestor descendant')来选择，层级之间用空格隔开
+        </p>
+    </div>
+
+    <!-- HTML结构 -->
+    <div class="testing">
+        <ul class="lang">
+            <li class="lang-javascript">JavaScript</li>
+            <li class="lang-python">Python</li>
+            <li class="lang-lua">Lua</li>
+        </ul>
+    </div>
+</body>
+<script>
+    /*1.层级选择器,层级间用空格号' '隔开*/
+    $('ul.lang li.lang-javascript'); // [<li class="lang-javascript">JavaScript</li>]
+    $('ul.lang li');//选择所有的<li>节点
+
+    /*2.子选择器，子类必须是父类的直接子元素，用'>'分割*/
+    $('ul.lang>li.lang-javascript');// 可以选出[<li class="lang-javascript">JavaScript</li>]
+    $('div.testing>li.lang-javascript'); // [], 无法选出，因为<div>和<li>不构成父子关系
+
+    /*3.过滤器，可以在层级选择器中添加过滤器，辅助精确定位，用':'开始分割*/
+    $('ul.lang li');// 选出JavaScript、Python和Lua 3个节点
+    $('ul.lang li:first-child');// 仅选出JavaScript
+    $('ul.lang li:last-child');// 仅选出Lua
+    $('ul.lang li:nth-child(2)');// 选出第N个元素，N从1开始
+    $('ul.lang li:nth-child(even)');// 选出序号为偶数的元素
+    $('ul.lang li:nth-child(odd)');// 选出序号为奇数的元素
+    //还有很多过滤器，例如form表单相关的，checked等状态值过滤器
+
+</script>
+</html>

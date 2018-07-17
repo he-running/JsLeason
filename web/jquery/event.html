@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>事件</title>
+    <script src="../frame/jquery-3.3.1.js"></script>
+</head>
+<body>
+    <div>事件</div>
+
+    <!--test-->
+    <div id="test" style="width: 200px;height: 200px;background-color: #cccccc">
+        <p>hello,test</p>
+
+        <span id="testMouseMoveSpan"></span>
+    </div>
+
+    <button id="btn">click me</button>
+
+    <div>
+        <input type="text" id="input">
+        <span id="inputText"></span>
+        <div>
+            <button id="input-click">手动触发</button>
+        </div>
+    </div>
+
+</body>
+<script>
+    /*1. 事件
+    * 包括鼠标事件，键盘事件，其他事件
+    * 用$('xxx').on('eventName',function(){});可以处理这些事件，其中第一个参数是事件的名称
+    * 当然，也可使用简写方式来监听事件，例如点击事件xxx.click(function(){});*/
+    //ready：当页面被载入并且DOM树完成初始化后触发。通常用于初始化页面，在DOM树加载完毕后调用
+    //以下为3种写法，效果一样，且可以连着写多个ready，将按顺序执行
+    $(document).on('ready',function () {
+       //init1
+    });
+
+    $(document).ready(function () {
+       //init2
+    });
+
+    $(function () {
+        //init3,推荐使用这种简写
+    });
+
+    /*
+    * 2. 事件参数
+    * 通过事件的参数都存入event中，在绑定事件响应时，获取传过来的event参数
+    * 即可获得所需要的参数，例如鼠标移动事件
+    * */
+    $('#test').mousemove(function (event) {
+        $('#testMouseMoveSpan').text('pageX = ' + event.pageX + ', pageY = ' + event.pageY);
+    });
+
+    /*
+    * 3.事件绑定与解除
+    * 一个已被绑定的事件可以解除绑定，通过off('eventName', function)实现
+    * 其中function是跟绑定时一致的对象才生效
+     * */
+    function clickMe() {
+      alert('点我啦！3s后取消绑定');
+        setTimeout(function () {
+            $('#btn').off('click',clickMe);//取消绑定
+        },3000);
+    };
+    $('#btn').click(clickMe);
+
+    /*
+    * 4.事件触发条件
+    * 事件触发总是由浏览器触发的，但有时候需要我们自己触发事件，
+    * 这个时候可以修改值后，调用无参数的事件方法来触发
+    * */
+    //改变完成后才会触发，不是边改边触发
+    $('#input').change(function (e) {
+        $('#inputText').text('修改完成...');
+        setTimeout(function () {
+            $('#inputText').text('');
+        },1000);
+    });
+    //手动触发
+    $('#input-click').click(function () {
+        $('#input').val('手动触发');
+        $('#input').change();//无参数触发
+    });
+
+    /*
+    * 5.浏览器安全限制
+    * 有些事件，只能由用户触发，在js中是会被浏览器拦截的
+    * 例如window.open('/')事件，只有用户点击click或 其他事件
+    * 触发函数打开新窗口，不能由代码自己直接打开。
+    * */
+
+</script>
+</html>

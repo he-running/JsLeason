@@ -7,6 +7,14 @@
 <body>
 <div>
 
+    <div>
+        <p>
+            在操作一个DOM节点前，我们需要通过各种方式先拿到这个DOM节点。<br>
+            最常用的方法是document.getElementById()和document.getElementsByTagName()，<br>
+            以及CSS选择器document.getElementsByClassName().
+        </p>
+    </div>
+
     <!-- 更新HTML结构 -->
     <div id="test-div">
         <p id="test-js">javascript</p>
@@ -46,5 +54,14 @@
     } else {
         console.log('节点测试失败!');
     }
+
+    /*插入*/
+    //parent.appendChild(newChild)
+
+    //insertBefore(new,reference)
+
+    /*删除*/
+    //调用父节点的parent.removeChild(child)把自己删掉
+
 </script>
 </html>

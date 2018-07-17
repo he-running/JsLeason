@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jQuery封装的ajax</title>
+    <script src="../frame/jquery-3.3.1.js"></script>
+</head>
+<body>
+<div>ajax的使用</div>
+</body>
+<script>
+    //1.概念,jQuery的全局对象jQuery即$封装了ajax的方法，通过ajax(url, settings)函数可以直接访问网络
+    // ajax()需要接收一个URL和一个可选的settings对象，settings对象的key-value值一般如下：
+
+    /*
+     async：是否异步执行AJAX请求，默认为true，千万不要指定为false；
+
+     method：发送的Method，缺省为'GET'，可指定为'POST'、'PUT'等；
+
+     contentType：发送POST请求的格式，默认值为'application/x-www-form-urlencoded; charset=UTF-8'，也可以指定为text/plain、application/json；
+
+     data：发送的数据，可以是字符串、数组或object。如果是GET请求，data将被转换成query附加到URL上，如果是POST请求，根据contentType把data序列化成合适的格式；
+
+     headers：发送的额外的HTTP头，必须是一个object；
+
+     dataType：接收的数据格式，可以指定为'html'、'xml'、'json'、'text'等，缺省情况下根据响应的Content-Type猜测。*/
+
+    //eg，一个简单的get请求
+    $.ajax('/api/categories',{
+        method: 'GET',//默认值，当为get请求时，可不写该属性
+        dataType: 'json'
+    });
+
+    //带响应成功，失败和总执行的语句
+    $.ajax('/api/categories',{
+        dataType: 'json'
+    }).done(function (data) {
+        console.log('成功, 收到的数据: ' + JSON.stringify(data));
+    }).fail(function (xhr, status) {
+        console.log('失败: ' + xhr.status + ', 原因: ' + status);
+    }).always(function () {
+        console.log('请求完成: 无论成功或失败都会调用');
+    });
+
+    //ajax请求也可以采用以下的书写方式，eg：$.ajax({key-value}),直接传入一个对象，设置好参数和响应
+    $.ajax({
+        url: '/api/categories',
+        method: 'GET',
+        dataType: 'json',
+        success: function (data) {
+            console.log('成功');
+        },
+        error: function () {
+            console.log('失败');
+        }
+    });
+
+
+    /*
+    * 2.get方式
+    * 除了以上的统一格式，还可以调用封装好的get()方法
+    * $.get('url',param2);第二个参数如果是object,则把对象参数附加到URL中
+    * */
+    $.get('/api/categories',{
+        name: 'jon',
+        age: 23
+    });
+
+    /*
+    * 3.post方式
+    * post()和get()类似，但是传入的第二个参数默认被序列化为application/x-www-form-urlencoded，附加到POST的body中
+    * */
+    $.post('/api/categories',{
+        name: 'jon',
+        age: 23
+    });
+
+    /*
+    * 4.安全限制
+    * 例如跨域访问数据等，这个跟js的ajax安全限制一样
+    * */
+    //如果需要使用JSONP，可以在ajax()中设置jsonp: 'callback'，让jQuery实现JSONP跨域加载数据。
+    $.get('/hello/categories',{
+        jsonp: 'callback'
+    })
+
+</script>
+</html>

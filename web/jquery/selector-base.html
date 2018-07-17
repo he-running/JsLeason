@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>选择器</title>
+    <script src="../frame/jquery-3.3.1.js"></script>
+</head>
+<body>
+    <div>jQuery的选择器</div>
+
+    <!--test-->
+    <div id="test" class="test">
+        <p>
+            <span class="hello hi">
+                hello
+            </span>
+        </p>
+    </div>
+
+    <div name="email">
+        <input id="input" type="email">
+    </div>
+
+    <!-- HTML结构 -->
+    <div id="test-jquery">
+        <p id="para-1" class="color-red">JavaScript</p>
+        <p id="para-2" class="color-green">Haskell</p>
+        <p class="color-red color-green">Erlang</p>
+        <p name="name" class="color-black">Python</p>
+        <form class="test-form" target="_blank" action="#0" onsubmit="return false;">
+            <legend>注册新用户</legend>
+            <fieldset>
+                <p><label>名字: <input name="name"></label></p>
+                <p><label>邮件: <input name="email"></label></p>
+                <p><label>口令: <input name="password" type="password"></label></p>
+                <p><button type="submit">注册</button></p>
+            </fieldset>
+        </form>
+    </div>
+
+</body>
+<script>
+    //1.id,tag,class选择器
+    var test = $('#test');
+    console.log('id：'+test);
+    var tag = $('p');
+    console.log('tag: '+tag);
+    var clazz = $('.hello');
+    console.log('class: '+clazz);
+    //多个class查找
+    var claz = $('.hello.hi');//没有空格
+
+    //2.按属性查找,格式为用‘[]’包裹,=前四属性名，后面是值
+    var attr1 = $('[type = "text"]');
+    //还可以使用前缀查找或者后缀查找
+    var attr2 = $('[class ^= "hello"]');//以hello为开始的class
+    var attr3 = $('[class $= "hi"]');//以hi结尾的class
+
+    //3.组合查找，把以上的简单选择器组合在一起可以实现更多的选择方式
+    var email = $('input[type="email"]');//找到type属性为email的input元素。
+
+    //4.多项选择器，用','分割，把多个选择器放到一起
+    var multi = $('div.class,div[name="email"]');//选中两个div
+
+    /*
+    * 练习
+    * */
+
+    var selected = null;
+
+    selected = $('#para-1');//仅选择JavaScript
+    selected = $('[class="color-red color-green"]');//仅选择Erlang
+    selected = $('.color-red'); //选择JavaScript和Erlang
+    selected = $('#test-jquery>p');//选择所有编程语言
+    selected = $('input[name="name"]');//选择名字input
+    selected = $('input[name="name"],[name="email"]');//选择邮件和名字input
+
+    // 高亮结果:
+    if (!(selected instanceof jQuery)) {
+        console.log('不是有效的jQuery对象!');
+    }
+    $('#test-jquery').find('*').css('background-color', '');//find('*')查找所有
+    selected.css('background-color', '#ffd351');
+</script>
+</html>

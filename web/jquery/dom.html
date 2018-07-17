@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DOM操作</title>
+    <script src="../frame/jquery-3.3.1.js"></script>
+</head>
+<style>
+    .highlight {
+        color: #dd1144;
+        background-color: #ffd351;
+    }
+</style>
+
+<body>
+    <div>DOM操作</div>
+
+    <!--修改Text和HTML HTML结构 -->
+    <ul id="test-ul">
+        <li class="js">JavaScript</li>
+        <li name="book">Java &amp; JavaScript</li>
+    </ul>
+
+    <!--修改CSS HTML结构 -->
+    <ul id="test-css">
+        <li class="lang dy"><span>JavaScript</span></li>
+        <li class="lang"><span>Java</span></li>
+        <li class="lang dy"><span>Python</span></li>
+        <li class="lang"><span>Swift</span></li>
+        <li class="lang dy"><span>Scheme</span></li>
+    </ul>
+
+    <input id="test-input" name="email" value="">
+</body>
+<script>
+    /*1.修改Text和HTML,对于text()和html()两个方法，传入参数就是更改，空就是获取*/
+    var text = $('#test-ul li.js').text();
+    console.log(text);
+    var html = $('[name="book"]').html();
+    console.log(html);
+
+    setTimeout(function () {
+        $('#test-ul li.js').text('js');
+        $('[name="book"]').html('java &nbsp;JavaScript');
+    },2000);
+
+    /*2.修改CSS,用选择器选定元素后，调用css('name', 'value')方法即可动态改变样式*/
+    $('#test-css li.dy>span').css('background-color','#ffd351')
+        .css('color','red');
+
+    /*3.修改class属性,动态修改class属性*/
+    console.log($('#test-css li').hasClass('highlight'));
+    setTimeout(function () {
+        $('#test-css li').addClass('highlight');
+    },3000);
+
+    setTimeout(function () {
+        $('#test-css li').removeClass('highlight');
+    },5000);
+
+    /*4.显示和隐藏DOM,使用hide()和show()方法*/
+    $('#test-css li.dy').hide();
+
+    setTimeout(function () {
+        $('#test-css li.dy').show();
+    },1000);
+
+    /*5.获取DOM信息,对象的方法，基本是不传参数就是获取，传参数就是设置*/
+    // 浏览器可视窗口大小:
+    $(window).width(); // 800
+    $(window).height(); // 600
+
+    // HTML文档大小:
+    $(document).width(); // 800
+    $(document).height(); // 3500
+
+    // 某个div的大小:
+    var div = $('#test-div');
+    div.width(); // 600
+    div.height(); // 300
+    div.width(400); // 设置CSS属性 width: 400px，是否生效要看CSS是否有效
+    div.height('200px'); // 设置CSS属性 height: 200px，是否生效要看CSS是否有效
+
+    /*6.attr()和removeAttr()方法用于操作DOM节点的属性，
+    * 对于attr()方法，传入单个参数就是获取对应值，两个参数就是设置*/
+
+    // <div id="test-div" name="Test" start="1">...</div>
+    var div = $('#test-div');
+    div.attr('data'); // undefined, 属性不存在
+    div.attr('name'); // 'Test'
+    div.attr('name', 'Hello'); // div的name属性变为'Hello'
+    div.removeAttr('name'); // 删除name属性
+    div.attr('name'); // undefined
+
+    /*7.操作表单，用val()方法获取或设置表单数据*/
+    setTimeout(function () {
+        $('#test-input').val('1111@qq.com');
+    },2000);
+</script>
+
+</html>
