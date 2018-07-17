@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>扩展</title>
+    <script src="../frame/jquery-3.3.1.js"></script>
+</head>
+<body>
+    <div>扩展</div>
+
+    <!-- HTML结构 -->
+    <div id="test-highlight1">
+        <p>什么是<span>jQuery</span></p>
+        <p><span>jQuery</span>是目前最流行的<span>JavaScript</span>库。</p>
+    </div>
+</body>
+<script>
+    /*
+    * 1.编写jQuery插件
+    * 给jQuery对象绑定一个新方法是通过扩展$.fn对象实现的
+    * */
+    $.fn.highlight1 = function () {
+       //这里的this，已绑定为当前的jQuery对象
+       this.css('background-color','#333333').css('color','white');
+       return this;//因为jQuery支持链式调用，所以返回当前jQuery对象，便于后面链式调用,
+    };
+
+    $('#test-highlight1 span').highlight1();
+
+    /*
+    * 2.使用辅助方法，完成终极的扩展插件
+    * 使用jQuery提供的辅助方法$.extend(target, obj1, obj2, ...)，把传入的多个对象的属性，合并到第一个对象中
+    * 遇到同名的属性总是取最后一个对象的属性值
+    * */
+    $.fn.highlight = function (options) {
+      var obj = $.extend({},$.fn.highlight.defaults,options);
+      this.css('background-color',obj.backgroundColor).css('color',obj.color);
+      return this;
+    };
+
+    $.fn.highlight.defaults = {
+        backgroundColor: '#ddd500',
+        color: 'red'
+    }
+
+    $('#test-highlight1 span').highlight({
+        color: 'blue'
+    });
+
+    /*综合上面，自定义插件步骤如下：
+    * 1.使用$.fn绑定函数funcName，并接收参数
+    * 2.使用$.extend({},obj1,obj2)合并默认值，传入的值
+    * 3.使用$.fn.funcName.defaults = {}声明默认值
+    * 4.调用该扩展方法，传入参数覆盖默认值
+    * */
+
+    //原则：
+    //编写的扩展方法能支持链式调用、具备默认值和过滤特定元素
+
+</script>
+</html>
